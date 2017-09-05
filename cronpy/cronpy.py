@@ -1,5 +1,5 @@
 """
-
+CronPy
 
 Features
 -- Flexible scheduling
@@ -24,7 +24,6 @@ import re
 import itertools
 from time import sleep
 
-# TODO Consider inherinting from functools partial to create a new partial with a nice __repr__
 # TODO consider adding additional convenience methods...every minute? every hour? every 15 minutes?
 # TODO Consider interval function..."every x minutes"...add factors of 60/x to minutes...
 

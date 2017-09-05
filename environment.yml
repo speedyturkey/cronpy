@@ -1,0 +1,7 @@
+name: cronpy
+dependencies:
+  - python=3.4
+  - pip:
+    - tox-travis
+    - coveralls
+
