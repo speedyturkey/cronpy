@@ -1,31 +1,8 @@
-"""
-CronPy
-
-Features
--- Flexible scheduling
--- Convenience functions
--- Easily run all jobs with a certain tag.
-
-Sample Code
-
-def task():
-    print("CronPy is working!")
-
-cronpy.new_task().every_day().at("9:00").do(task)
-cronpy.new_task().every_day().at_hours("0-23").do(task)
-cronpy.new_task().on_days("0-4").at_hours("9-17").at_minutes("15, 45").do(task)
-
-cronpy.run_continuously()
-
-"""
 import functools
 import datetime
 import re
 import itertools
 from time import sleep
-
-# TODO consider adding additional convenience methods...every minute? every hour? every 15 minutes?
-# TODO Consider interval function..."every x minutes"...add factors of 60/x to minutes...
 
 
 class Cron(object):
@@ -112,7 +89,7 @@ class Task(object):
         if self.configured:
             try:
                 task_name = self.task_func.__name__
-            except:
+            except AttributeError:
                 task_name = repr(self.task_func)
             next_run = self.next_run_at if self.next_run_at else "(not scheduled)"
             ret = "<Task> Do {}. Next run at {}".format(task_name, next_run)
@@ -182,12 +159,10 @@ class Task(object):
 
     def on_days(self, day_range):
         """
-
         :param day_range: Range of days as string in format "0-4" or "0:4", or list of days in format "0, 2, 4"
         :return: self
 
         Sets specific days of the week on which to execute this task.
-
         """
         delimiters = set(re.findall("[:,-]", day_range))
         if len(delimiters) > 1:
@@ -210,6 +185,12 @@ class Task(object):
         return self
 
     def at_hours(self, hour_range):
+        """
+        :param hour_range: Range of hours as string in format "0-4" or "0:4", or list of hours in format "0, 2, 4"
+        :return: self
+
+        Sets specific hours of the day during which to execute this task.
+        """
         if not self.days:
             self.every_day()
         delimiters = set(re.findall("[:,-]", hour_range))
@@ -233,6 +214,12 @@ class Task(object):
         return self
 
     def at_minutes(self, minute_range):
+        """
+        :param minute_range: Range of minutes as string in format "0-4" or "0:4", or list of minutes in format "0, 15, 30"
+        :return: self
+
+        Sets specific minutes of the hour during which to execute this task.
+        """
         if not self.days:
             self.every_day()
         if not self.hours:
@@ -255,6 +242,28 @@ class Task(object):
             self.minutes = list(range(start_minute, end_minute + 1))
         else:
             self.minutes = minute_list
+        return self
+
+    def hour_interval(self, interval):
+        """
+        :param interval: Integer between 1 and 24. 24 hours will be split into intervals of size `interval`.
+        :return self
+        This <Task> will be executed only during the hours specified by the interval. For example, if `interval` == 6,
+        execution will take place during the hours 00:00, 06:00, 12:00, and 18:00.
+        """
+        assert 1 <= interval <= 24
+        self.hours = list(range(0, 24))[::interval]
+        return self
+
+    def minute_interval(self, interval):
+        """
+        :param interval: Integer between 1 and 60. 60 minutes will be split into intervals of size `interval`.
+        :return self
+        This <Task> will be executed only at the minutes specified by the interval. For example, if `interval` == 15,
+        execution will take place at 0, 15, 30 and 45 minutes past the hour.
+        """
+        assert 1 <= interval <= 60
+        self.minutes = list(range(0, 60))[::interval]
         return self
 
     def monday(self):
