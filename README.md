@@ -1,5 +1,6 @@
 # CronPy
 [![Build Status](https://travis-ci.org/speedyturkey/cronpy.svg?branch=master)](https://travis-ci.org/speedyturkey/cronpy)
+[![Coverage Status](https://coveralls.io/repos/github/speedyturkey/cronpy/badge.svg?branch=master)](https://coveralls.io/github/speedyturkey/cronpy?branch=master)
 
 Features
 * Flexible scheduling
