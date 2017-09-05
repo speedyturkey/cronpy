@@ -3,6 +3,8 @@ python:
     - "3.4"
     - "3.5"
     - "3.6"
-install: pip install tox-travis
+install:
+  pip install tox-travis
+  pip install coverals
 script: tox
 after_success: coveralls
