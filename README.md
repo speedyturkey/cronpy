@@ -19,3 +19,12 @@ cronpy.new_task().on_days("0-4").at_hours("9-17").at_minutes("15, 45").do(task)
 
 cronpy.run_continuously()
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details
+
+## Acknowledgments
+
+This software was inspired by Dan Bader's `schedule` project. His work can be found at
+<https://github.com/dbader/schedule>.

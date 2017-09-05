@@ -19,8 +19,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-
-
+This software was inspired by Dan Bader's `schedule` project. His work can be found:
+https://github.com/dbader/schedule
+The license for that project is reproduced in full below.
 
 The MIT License (MIT)
 
